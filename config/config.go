@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/devdinu/simple-api/dbi"
 	"github.com/kelseyhightower/envconfig"
 )
 
@@ -21,11 +22,15 @@ func AppAddress() string {
 
 type Application struct {
 	server Server
+	DB     dbi.Config
 }
 
 func MustLoad() Application {
 	var errs []error
 	if err := envconfig.Process("", &app.server); err != nil {
+		errs = append(errs, err)
+	}
+	if err := envconfig.Process("DB", &app.DB); err != nil {
 		errs = append(errs, err)
 	}
 	if len(errs) != 0 {

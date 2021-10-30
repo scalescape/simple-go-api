@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/devdinu/simple-api/config"
+	"github.com/devdinu/simple-api/dbi"
 	"github.com/devdinu/simple-api/ping"
 	"github.com/gorilla/mux"
 )
@@ -13,7 +14,11 @@ func server(appCfg config.Application) (*mux.Router, error) {
 	m.Use(mux.MiddlewareFunc(contentWriter))
 	m.Use(mux.CORSMethodMiddleware(m))
 
-	m.HandleFunc("/ping", ping.Handler()).Methods(http.MethodGet, http.MethodOptions)
+	db, err := dbi.NewDB(appCfg.DB)
+	if err != nil {
+		return nil, err
+	}
+	m.HandleFunc("/ping", ping.Handler(db)).Methods(http.MethodGet, http.MethodOptions)
 	return m, nil
 }
 
