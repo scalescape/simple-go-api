@@ -6,6 +6,7 @@ import (
 	"github.com/devdinu/simple-api/config"
 	"github.com/devdinu/simple-api/dbi"
 	"github.com/devdinu/simple-api/ping"
+	"github.com/devdinu/simple-api/users"
 	"github.com/gorilla/mux"
 )
 
@@ -18,7 +19,10 @@ func server(appCfg config.Application) (*mux.Router, error) {
 	if err != nil {
 		return nil, err
 	}
+	usersService := users.NewService(db)
 	m.HandleFunc("/ping", ping.Handler(db)).Methods(http.MethodGet, http.MethodOptions)
+	m.HandleFunc("/users/count", users.CountUsersHandler(usersService)).Methods(http.MethodGet, http.MethodOptions)
+	m.HandleFunc("/users", users.ListUsersHandler(usersService)).Methods(http.MethodGet, http.MethodOptions)
 	return m, nil
 }
 

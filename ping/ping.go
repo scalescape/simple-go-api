@@ -17,6 +17,7 @@ func Handler(db *sqlx.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if err := db.Ping(); err != nil {
 			writeError(w, http.StatusInternalServerError, "failed to connect with db", err)
+			return
 		}
 		resp := response{Message: "pong"}
 		if err := json.NewEncoder(w).Encode(resp); err != nil {
