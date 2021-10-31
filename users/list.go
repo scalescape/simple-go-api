@@ -14,8 +14,8 @@ type Users struct {
 }
 
 type response struct {
-	Count string    `db:"count"`
-	Time  time.Time `db:"time"`
+	Count string    `json:"count"  db:"count"`
+	Time  time.Time `json:"time"   db:"time"`
 }
 
 func CountUsersHandler(svc Service) http.HandlerFunc {

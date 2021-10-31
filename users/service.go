@@ -2,15 +2,18 @@ package users
 
 import (
 	"context"
+	"database/sql"
 	"time"
 
 	"github.com/jmoiron/sqlx"
 )
 
+// Ideally we would map struct in to another struct while decoding, so you've better control on which fields to ignore on different APIs
 type User struct {
-	ID        string    `db:"id"`
-	Name      string    `db:"name"`
-	CreatedAt time.Time `db:"created_at"`
+	ID        string         `json:"id"     db:"id"`
+	Name      string         `json:"name"   db:"name"`
+	Bio       sql.NullString `json:"-"      db:"bio"`
+	CreatedAt time.Time      `json:"created_at" db:"created_at"`
 }
 
 type Service struct {
