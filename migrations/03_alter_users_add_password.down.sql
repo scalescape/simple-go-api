@@ -1,0 +1,4 @@
+ALTER TABLE users
+    DROP COLUMN PASSWORD;
+
+

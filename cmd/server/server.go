@@ -23,6 +23,7 @@ func server(appCfg config.Application) (*mux.Router, error) {
 	m.HandleFunc("/ping", ping.Handler(db)).Methods(http.MethodGet, http.MethodOptions)
 	m.HandleFunc("/users/count", users.CountUsersHandler(usersService)).Methods(http.MethodGet, http.MethodOptions)
 	m.HandleFunc("/users", users.ListUsersHandler(usersService)).Methods(http.MethodGet, http.MethodOptions)
+	m.HandleFunc("/auth", users.Authenticate(usersService)).Methods(http.MethodPost, http.MethodOptions)
 	return m, nil
 }
 

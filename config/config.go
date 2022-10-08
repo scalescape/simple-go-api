@@ -16,6 +16,10 @@ type Server struct {
 	Scheme string `default:"http"`
 }
 
+func (s Server) Address() string {
+	return fmt.Sprintf("%s:%d", s.Host, s.Port)
+}
+
 func AppAddress() string {
 	return fmt.Sprintf("%s:%d", app.server.Host, app.server.Port)
 }

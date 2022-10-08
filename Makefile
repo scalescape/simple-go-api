@@ -7,6 +7,9 @@ setup:
 build:
 	go build -o ${BINARY} ./cmd/server
 
+test: 
+	go test ./...
+
 run: build db.migrate
 	${BINARY}
 

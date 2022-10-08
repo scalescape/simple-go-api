@@ -1,0 +1,5 @@
+config has a struct
+exposed Func in config
+different package has a struct (dbi.Config)
+Load/MustLoad
+
